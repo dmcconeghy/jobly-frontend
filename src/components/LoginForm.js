@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Alert from "./Alert";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import UserContext from "../UserContext";
+
 
 function LoginForm({login}) {
     const navigate = useNavigate();
@@ -9,6 +11,11 @@ function LoginForm({login}) {
         password: "",
     });
     const [formErrors, setFormErrors] = useState([]);
+    const { currentUser } = useContext(UserContext);
+
+    if (currentUser) {
+        return <Navigate to="/" />;
+    }
 
     async function handleSubmit(event) {
         event.preventDefault();

@@ -5,17 +5,21 @@ import Components from "./components/Components";
 import JoblyApi from "./api";
 import { decodeToken } from "react-jwt";
 import UserContext from "./UserContext";
-
+import useLocalStorage from "./useLocalStorage.js";
 import './App.css';
 
+export const TOKEN_STORAGE_KEY = "jobly-token";
+
+
 function App() {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(useLocalStorage(TOKEN_STORAGE_KEY));
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect( 
     function loadUser() {
       async function getCurrentUser() {
         if (token) {
+          
           try {
             let { username } = decodeToken(token);
             JoblyApi.token = token;
@@ -29,16 +33,15 @@ function App() {
       }
       getCurrentUser();
     }, [token]
-    );
+  );
         
-
   async function signup(signupData) {
     try {
       let token = await JoblyApi.signup(signupData);
       setToken(token);
       return { success: true };
     } catch (errors) {
-      console.error("singup error", errors);
+      console.error("signup error", errors);
       return { success: false, errors };
     }
   }
