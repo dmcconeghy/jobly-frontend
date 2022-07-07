@@ -12,7 +12,7 @@ export const TOKEN_STORAGE_KEY = "jobly-token";
 
 
 function App() {
-  const [token, setToken] = useState(useLocalStorage(TOKEN_STORAGE_KEY));
+  const [token, setToken] = useLocalStorage(TOKEN_STORAGE_KEY);
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect( 
@@ -23,6 +23,7 @@ function App() {
           try {
             let { username } = decodeToken(token);
             JoblyApi.token = token;
+            
             let currentUser = await JoblyApi.getCurrentUser(username);
             setCurrentUser(currentUser);
           } catch (error) {
