@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import CompaniesList from "./CompaniesList";
 import CompanyDetails from "./CompanyDetails";
@@ -14,13 +14,14 @@ function Components() {
         <div>
             
             <Routes>
+                <Route path ="/" element={<Homepage/>} />
                 <Route path ="/companies" element={<CompaniesList />} />
                 <Route path ="/companies/:handle" element={<CompanyDetails />} />
                 <Route path ="/jobs" element={<JobsList/>} />
                 <Route path ="/login" element={<LoginForm/>} />
                 <Route path ="/profile" element={<ProfileForm/>} />
                 <Route path ="/signup" element={<SignupForm/>} />
-                <Route path ="/" element={<Homepage/>} />
+                <Route path = "*" element={<Navigate to="/" />} />
             </Routes>
         </div>
     );

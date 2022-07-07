@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "../LoadingSpinner";
 import JoblyApi from "../api";
+import "./CompanyDetails.css";
+
 
 function CompanyDetails() {
     const { handle } = useParams();
@@ -14,11 +16,13 @@ function CompanyDetails() {
         getCompanyDetails();
         }, [handle]);
         
-        if (!company) return 
-            <LoadingSpinner />;
+        if (!company) return <LoadingSpinner />;
+
         return (
-            <div>
-                <h1>This is the page for the details about { handle } company</h1>
+            <div className="company-details">
+                <h1>{ company.name }</h1>
+                <h2>{ company.description }</h2>
+                <p> Employees: { company.numEmployees }</p>
             </div>
         );
 }
