@@ -9,7 +9,7 @@ import LoginForm from "./LoginForm";
 import ProfileForm from "./ProfileForm";
 import SignupForm from "./SignupForm";
 
-function Components() {
+function Components({ signup, login }) {
     return (
         <div>
             
@@ -18,9 +18,9 @@ function Components() {
                 <Route path ="/companies" element={<CompaniesList />} />
                 <Route path ="/companies/:handle" element={<CompanyDetails />} />
                 <Route path ="/jobs" element={<JobsList/>} />
-                <Route path ="/login" element={<LoginForm/>} />
+                <Route path ="/login" element={<LoginForm login = { login } />} />
                 <Route path ="/profile" element={<ProfileForm/>} />
-                <Route path ="/signup" element={<SignupForm/>} />
+                <Route path ="/signup" element={<SignupForm signup = { signup }/>} />
                 <Route path = "*" element={<Navigate to="/" />} />
             </Routes>
         </div>
