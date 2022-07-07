@@ -15,12 +15,11 @@ function SearchForm( { search } ) {
 
   return (
     <div>
-      <h1> Companies </h1>  
       <form onSubmit={handleSubmit}>
             <input 
                 type="text"
                 name="searchTerm"
-                placeholder="Search for a company" 
+                placeholder="Enter a search term..." 
                 value={searchTerm} 
                 onChange={handleChange} 
             />
