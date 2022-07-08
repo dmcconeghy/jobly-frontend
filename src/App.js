@@ -7,6 +7,7 @@ import { decodeToken } from "react-jwt";
 import UserContext from "./UserContext";
 import useLocalStorage from "./useLocalStorage.js";
 import './App.css';
+import LoadingSpinner from "./LoadingSpinner";
 
 export const TOKEN_STORAGE_KEY = "jobly-token";
 
@@ -14,6 +15,8 @@ export const TOKEN_STORAGE_KEY = "jobly-token";
 function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_KEY);
   const [currentUser, setCurrentUser] = useState(null);
+  const [info, setInfo] = useState(false);
+  const [appIds, setAppIds] = useState(new Set([]));
 
   useEffect( 
     function loadUser() {
@@ -26,12 +29,15 @@ function App() {
             
             let currentUser = await JoblyApi.getCurrentUser(username);
             setCurrentUser(currentUser);
+            setAppIds(new Set(currentUser.applications));
           } catch (error) {
             console.error("error getting current user", error);
             setCurrentUser(null);
           }
         }
+        setInfo(true);
       }
+      setInfo(false);
       getCurrentUser();
     }, [token]
   );
@@ -63,9 +69,21 @@ function App() {
     setToken(null)
   }
 
+  function hasApplied(jobId){
+    return appIds.has(jobId);
+  }
+
+  function applyTo(jobId){
+    if(hasApplied(jobId)) return;
+    JoblyApi.applyTo(currentUser.username, jobId);
+    setAppIds(new Set([...appIds, jobId]));
+  }
+
+  if (!info) return <LoadingSpinner />;
+
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ currentUser, setCurrentUser}}>
+      <UserContext.Provider value={{ currentUser, setCurrentUser, hasApplied, applyTo}}>
 
         <div className="App">
           <NavBar logout={ logout } />
