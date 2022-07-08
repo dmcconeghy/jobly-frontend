@@ -93,7 +93,8 @@ function SignupForm( { signup } ) {
             <Alert type="danger" messages={formErrors} />
         ) : null}
         <div className="form-group">
-            <button type="submit">Sign Up</button>
+            <button type="submit" onSubmit={handleSubmit}>Sign Up</button>
+            {/* Do I need button to contain onSubmit={handleSubmit} too? */}
         </div>
         </form>
     </div>

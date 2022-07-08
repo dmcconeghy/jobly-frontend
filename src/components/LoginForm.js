@@ -61,7 +61,8 @@ function LoginForm({login}) {
             ) : null}
 
             <div className="form-group">
-                <button type="submit">Login</button>
+                <button type="submit" onSubmit={handleSubmit}>Login</button>
+                {/* Do I need button to contain onSubmit={handleSubmit} too? */}
             </div>
         </form>
     </div>
