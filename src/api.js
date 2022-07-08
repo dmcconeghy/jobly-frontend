@@ -70,8 +70,17 @@ class JoblyApi {
     return res.token;
   }
 
+  /** Return the currently logged account */
+
   static async getCurrentUser(username) {
     let res = await this.request(`users/${username}`);
+    return res.user;
+  }
+
+  /** Save changes to user profile */
+
+  static async updateUser(username, data) {
+    let res = await this.request(`users/${username}`, data, "patch");
     return res.user;
   }
 
